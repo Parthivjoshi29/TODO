@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced TODO List</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1><i class="fas fa-check-double"></i> Task Master</h1>
+        <h2>Your personal task management tool</h2>
+        <button id="themeToggleButton" class="theme-toggle">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+
+      <div class="input-container">
+        <label for="taskInput">Task:</label>
+        <input type="text" id="taskInput" placeholder="Add a new task" />
+
+        <label for="taskDate">Starting Date:</label>
+        <input type="date" id="taskDate" />
+
+        <label for="taskDueDate">Due Date:</label>
+        <input type="date" id="taskDueDate" />
+
+        <label for="taskPriority">Priority:</label>
+        <select id="taskPriority">
+          <option value="low">Low Priority</option>
+          <option value="medium">Medium Priority</option>
+          <option value="high">High Priority</option>
+        </select>
+
+        <label for="taskCategory">Category:</label>
+        <select id="taskCategory">
+          <option value="work">Work</option>
+          <option value="personal">Personal</option>
+          <option value="shopping">Shopping</option>
+          <option value="other">Other</option>
+        </select>
+
+        <label for="taskRecurrence">Recurrence:</label>
+        <select id="taskRecurrence">
+          <option value="none">None</option>
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+        </select>
+
+        <button id="addTaskButton"><i class="fas fa-plus"></i> Add</button>
+      </div>
+
+      <!-- Search Input Field -->
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search tasks..." />
+      </div>
+
+      <div class="task-stats">
+        <h2>Task Statistics</h2>
+        <div class="stat-card total">
+          <div class="stat-icon">
+            <i class="fas fa-tasks"></i>
+          </div>
+          <span class="stat-label">Total Tasks</span>
+          <span class="stat-value" id="totalTasks">0</span>
+        </div>
+
+        <div class="stat-card completed">
+          <div class="stat-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <span class="stat-label">Completed</span>
+          <span class="stat-value" id="completedTasksCount">0</span>
+        </div>
+
+        <div class="stat-card pending">
+          <div class="stat-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <span class="stat-label">Pending</span>
+          <span class="stat-value" id="pendingTasksCount">0</span>
+        </div>
+      </div>
+
+      <div class="filters">
+        <button id="filterAll" class="active">All</button>
+        <button id="filterPending">Pending</button>
+        <button id="filterCompleted">Completed</button>
+        <button id="clearAllButton" class="danger">
+          <i class="fas fa-trash"></i> Clear All
+        </button>
+      </div>
+
+      <!-- Sorting and Filtering Section -->
+      <div class="sorting-filtering-container">
+        <label for="sortTasks">Sort by:</label>
+        <select id="sortTasks">
+          <option value="date">Due Date</option>
+          <option value="priority">Priority</option>
+          <option value="category">Category</option>
+        </select>
+
+        <label for="filterTasks">Filter by:</label>
+        <select id="filterTasks">
+          <option value="all">All</option>
+          <option value="completed">Completed</option>
+          <option value="pending">Pending</option>
+        </select>
+      </div>
+
+      <div class="task-section">
+        <h2><i class="fas fa-tasks"></i> Tasks</h2>
+        <ul id="taskList"></ul>
+      </div>
+
+      <div id="activitySuggestion" class="activity-suggestion"></div>
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Edit Task Modal -->
+    <div id="editTaskModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Edit Task</h2>
+        <input type="text" id="editTaskText" placeholder="Task description" />
+        <input type="date" id="editTaskDate" />
+        <select id="editTaskPriority">
+          <option value="low">Low Priority</option>
+          <option value="medium">Medium Priority</option>
+          <option value="high">High Priority</option>
+        </select>
+        <select id="editTaskCategory">
+          <option value="work">Work</option>
+          <option value="personal">Personal</option>
+          <option value="shopping">Shopping</option>
+          <option value="other">Other</option>
+        </select>
+        <button id="saveTaskButton">Save Changes</button>
+      </div>
+    </div>
+
+    <!-- Confirmation Toast -->
+    <div id="confirmationToast" class="toast-container" style="display: none">
+      <div class="toast">
+        <span>Are you sure you want to clear all tasks?</span>
+        <button id="confirmClear">Yes</button>
+        <button id="cancelClear">No</button>
+      </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" style="display: none">↑</button>
+
+    <!-- Footer Section -->
+    <footer>
+      <div class="footer-content">
+        <p>&copy; 2023 Task Master. All rights reserved by Parthiv Joshi.</p>
+        <p>
+          A simple and effective way to manage your tasks and boost
+          productivity.
+        </p>
+        <div class="social-media">
+          <a href="https://github.com/Parthivjoshi29" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/parthiv-joshi-8a7766281/"
+            target="_blank"
+          >
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+        <p>
+          <a href="https://yourwebsite.com" target="_blank">Website</a> |
+        </p>
+      </div>
+    </footer>
+
+    <!-- Include your script at the end of the body -->
+    <script src="script.js"></script>
+  </body>
+</html>

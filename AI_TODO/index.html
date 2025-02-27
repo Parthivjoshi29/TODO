@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced TODO List</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1><i class="fas fa-check-double"></i> Task Master</h1>
+        <button id="themeToggleButton" class="theme-toggle">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+
+      <div class="input-container">
+        <input type="text" id="taskInput" placeholder="Add a new task" />
+        <input type="date" id="taskDate" />
+        <select id="taskPriority">
+          <option value="low">Low Priority</option>
+          <option value="medium">Medium Priority</option>
+          <option value="high">High Priority</option>
+        </select>
+        <button id="addTaskButton"><i class="fas fa-plus"></i> Add</button>
+      </div>
+
+      <div class="filters">
+        <button id="filterAll" class="active">All</button>
+        <button id="filterPending">Pending</button>
+        <button id="filterCompleted">Completed</button>
+        <button id="clearAllButton" class="danger">
+          <i class="fas fa-trash"></i> Clear All
+        </button>
+      </div>
+
+      <div id="motivationalQuote" class="motivation-quote"></div>
+
+      <div class="task-section">
+        <h2><i class="fas fa-tasks"></i> Tasks</h2>
+        <ul id="taskList"></ul>
+      </div>
+
+      <div id="activitySuggestion" class="activity-suggestion"></div>
+
+      <div class="task-stats">
+        <div class="stat-card total">
+          <div class="stat-icon">
+            <i class="fas fa-tasks"></i>
+          </div>
+          <span class="stat-label">Total Tasks</span>
+          <span class="stat-value" id="totalTasks">0</span>
+        </div>
+
+        <div class="stat-card completed">
+          <div class="stat-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <span class="stat-label">Completed</span>
+          <span class="stat-value" id="completedTasksCount">0</span>
+        </div>
+
+        <div class="stat-card pending">
+          <div class="stat-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <span class="stat-label">Pending</span>
+          <span class="stat-value" id="pendingTasksCount">0</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search tasks..."
+          oninput="searchTasks(this.value)"
+        />
+        <select id="categorySelect" onchange="filterByCategory(this.value)">
+          <option value="all">All Categories</option>
+          <option value="work">Work</option>
+          <option value="personal">Personal</option>
+          <option value="shopping">Shopping</option>
+        </select>
+        <button onclick="toggleDarkMode()" class="theme-toggle">
+          <i id="darkModeIcon" class="fas fa-moon"></i>
+        </button>
+      </div>
+
+      <div class="stats-container">
+        <div class="stat-card">
+          <h3>Total Tasks</h3>
+          <p id="totalTasks">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>Completed</h3>
+          <p id="completedTasks">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>Pending</h3>
+          <p id="pendingTasks">0</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
